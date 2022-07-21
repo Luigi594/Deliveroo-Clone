@@ -3,6 +3,7 @@ import React, { useLayoutEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { urlFor } from '../sanity'
 import { ArrowLeftIcon, ChevronRightIcon, LocationMarkerIcon, StarIcon, QuestionMarkCircleIcon } from "react-native-heroicons/outline"
+import DishRow from '../components/DishRow'
 
 const RestaurantScreen = () => {
 
@@ -76,6 +77,17 @@ const RestaurantScreen = () => {
             </Text>
 
             {/** DishRows */}
+            {dishes.map((dish) => (
+              <DishRow
+
+                key={dish._id}
+                id={dish._id}
+                name={dish.name}
+                description={dish.short_description}
+                price={dish.price}
+                image={dish.image}
+              />
+            ))}
         </View>
       </View>
     </ScrollView>
