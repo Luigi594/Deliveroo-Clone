@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { selectRestaurant } from '../features/restaurantSlice';
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromBasket, selectBasketItems, selectBasketTotal } from '../features/basketSlice';
+import { cleanBasket, removeFromBasket, selectBasketItems, selectBasketTotal } from '../features/basketSlice';
 import { XCircleIcon } from 'react-native-heroicons/solid';
 import { urlFor } from '../sanity';
 
@@ -32,8 +32,15 @@ const BasketScreen = () => {
 
   }, [items])  
 
+  const handleOrder = () => {
+
+    dispatch(cleanBasket());
+    navigation.navigate("PreparingOrder");
+
+  }
+
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white pt-5">
       <View className="flex-1 bg-gray-100">
         <View className="p-5 border-b border-[#00CCBB] bg-white shadow-sm">
             <View>
@@ -44,7 +51,7 @@ const BasketScreen = () => {
             </View>
 
             <TouchableOpacity onPress={navigation.goBack}
-                className="rounded-full bg-gray-100 absolute top-2 right-5">
+                className="rounded-full bg-gray-100 absolute top-5 right-5">
                 <XCircleIcon color={"#00CCBB"} height={50} width={50}/>
             </TouchableOpacity>
         </View>
@@ -107,6 +114,10 @@ const BasketScreen = () => {
                 <Text>Order Total</Text>
                 <Text className="font-extrabold">L.{basketTotal + 5.99}</Text>
             </View>
+
+            <TouchableOpacity onPress={handleOrder} className="rounded-lg bg-[#00CCBB] p-4">
+                <Text className="text-center text-white text-lg font-bold">Place Order</Text>
+            </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
